@@ -1,0 +1,65 @@
+
+
+step 1 is for demonstrating namespaces
+step 2 is for parsing a runtime bundle
+step 3 is downloading images
+step 4? is building images
+
+
+echo "HTTP/1.1 200 OK
+Server: netcat
+Content-Type: text/html
+Connection: Closed
+
+<html>
+<body>
+<h1>Hello, World!</h1>
+</body>
+</html>
+" > response.html
+x=1; while [ $x -le 5 ]; do cat response.html | nc -l -p 80; x=$(( $x + 1 )); done
+
+
+
+
+step 1
+
+what is a container?
+not a vm!
+process which is isolated and restricted
+what does that mean?
+ - less capabilities
+ - isolated network
+ - different file system
+ - different pids ???
+
+mention cgroups
+
+start with capabilities
+as user:
+capsh --print
+as root:
+capsh --print
+nc -l 80
+capsh --drop=cap_net_bind_service --
+suddenly no nc -l 80!
+
+then namespaces
+as root:
+ip addr show
+unshare -n
+ip addr show
+unshare -m  and then mount --bind alpine alpine_mnt
+show that outside nothing has changed
+unshare --help show other namespaces
+
+show bashc
+???? gotta do this better, explain the high level concepts before you show the code 
+ - setting up user namespace so we can create new namespaces ??? omit this?
+ - setting up network namespace
+  - creating tap0 device
+  - port forwarding
+ - bind mount stuff
+ - drop capabilities?
+ - chroot
+TODO add capsh --drop to bashc
