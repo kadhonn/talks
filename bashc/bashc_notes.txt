@@ -1,6 +1,6 @@
 
 
-step 1 is for demonstrating namespaces
+step 1 is for demonstrating basics of what is a container
 step 2 is for parsing a runtime bundle
 step 3 is downloading images
 step 4? is building images
@@ -28,9 +28,9 @@ what is a container?
 not a vm!
 process which is isolated and restricted
 what does that mean?
- - less capabilities
- - isolated network
- - different file system
+ - less capabilities in the kernel
+ - different network
+ - different (root) file system
  - different pids ???
 
 mention cgroups

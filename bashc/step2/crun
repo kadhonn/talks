@@ -1,0 +1,37 @@
+#!/bin/bash
+
+
+echo ">> $@" >> out
+
+pidfile=""
+bundle=""
+socket=""
+while test $# -gt 0
+do
+
+    if [ "$1" = "--pid-file" ]; then
+        pidfile="$2"
+        shift
+    fi
+    if [ "$1" = "--bundle" ]; then
+        bundle="$2"
+        shift
+    fi
+    if [ "$1" = "--console-socket" ]; then
+        socket="$2"
+        shift
+    fi
+    if [ "$1" = "--console-socket" ]; then
+        socket="$2"
+        shift
+    fi
+
+    shift
+done
+
+if [ "$pidfile" != "" ]; then
+    echo "2" >> $pidfile
+fi
+if [ "$socket" != "" ]; then
+    echo "/dev/tty" | nc -U "$socket"
+fi
