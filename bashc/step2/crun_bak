@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "background running" >> out
+
+sleep 10
+
+echo "background done" >> out

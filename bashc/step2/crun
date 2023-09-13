@@ -21,10 +21,6 @@ do
         socket="$2"
         shift
     fi
-    if [ "$1" = "--console-socket" ]; then
-        socket="$2"
-        shift
-    fi
 
     shift
 done
@@ -33,5 +29,12 @@ if [ "$pidfile" != "" ]; then
     echo "2" >> $pidfile
 fi
 if [ "$socket" != "" ]; then
+    ls -al $socket >> out
     echo "/dev/tty" | nc -U "$socket"
 fi
+if [ "$bundle" != "" ]; then
+    echo -n ""
+    #cat "$bundle/config.json"| jq >> out
+fi
+
+#sleep 10
