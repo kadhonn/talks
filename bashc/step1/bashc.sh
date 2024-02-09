@@ -12,7 +12,9 @@ port_forward=\''{"execute": "add_hostfwd", "arguments": {"proto": "tcp", "host_a
 unshare -Urmpf /bin/bash -c "
 
 #prepare necessary mounts for networking
+mkdir -p /run/netns
 mount -t tmpfs netns /run/netns
+mkdir -p /tmp
 mount -t tmpfs tmp /tmp
 
 #create netns and configure slirp4netns with a portforward
