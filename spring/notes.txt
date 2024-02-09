@@ -1,0 +1,16 @@
+
+
+sample
+
+what is a beanfactory / beandefinitionregistry
+
+context vs beanfactory
+beanpostprocessors?
+
+how to get beandefinitions into context?
+*BeanDefinitionReaders
+mention xml
+java based (configuration)
+annotation based (component scan)
+
+autoconfiguration?
