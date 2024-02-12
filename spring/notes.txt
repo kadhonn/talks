@@ -5,7 +5,7 @@ sample
 what is a beanfactory / beandefinitionregistry
 
 context vs beanfactory
-beanpostprocessors?
+beanpostprocessors!
 
 how to get beandefinitions into context?
 *BeanDefinitionReaders

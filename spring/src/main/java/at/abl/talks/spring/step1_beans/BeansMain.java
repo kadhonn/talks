@@ -16,15 +16,6 @@ public class BeansMain {
         BeanDefinitionRegistry beanDefinitionRegistry = listableBeanFactory;
         BeanFactory beanFactory = listableBeanFactory;
 
-        /*
-        TODO
-        AutowiredAnnotationBeanPostProcessor
-        InitializingBean
-        GenericApplicationContext
-        AnnotationConfigApplicationContext
-
-         */
-
         System.out.println("now registering bean definitions");
         beanDefinitionRegistry.registerBeanDefinition("serviceA", createServiceABeanDefinition());
         beanDefinitionRegistry.registerBeanDefinition("serviceB", createServiceBBeanDefinition());
@@ -39,11 +30,12 @@ public class BeansMain {
         GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
 
         beanDefinition.setBeanClass(ServiceB.class);
-        beanDefinition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
+//        beanDefinition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
 
-//        ConstructorArgumentValues constructorArgumentValues = new ConstructorArgumentValues();
-//        constructorArgumentValues.addIndexedArgumentValue(0, new ConstructorArgumentValues.ValueHolder(new RuntimeBeanReference(ServiceA.class)));
-//        beanDefinition.setConstructorArgumentValues(constructorArgumentValues);
+        ConstructorArgumentValues constructorArgumentValues = new ConstructorArgumentValues();
+        constructorArgumentValues.addIndexedArgumentValue(0,
+                new ConstructorArgumentValues.ValueHolder(new RuntimeBeanReference(ServiceA.class)));
+        beanDefinition.setConstructorArgumentValues(constructorArgumentValues);
 
         return beanDefinition;
     }
