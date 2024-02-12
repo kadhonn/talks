@@ -17,13 +17,6 @@ public class ContextMain {
         BeanDefinitionRegistry beanDefinitionRegistry = contextOrBeanFactory;
         BeanFactory beanFactory = contextOrBeanFactory;
 
-        /*
-        TODO
-
-        ConfigurationClassPostProcessor
-        AutowiredAnnotationBeanPostProcessor
-        AnnotationConfigApplicationContext
-         */
 
         System.out.println("now registering bean definitions");
         beanDefinitionRegistry.registerBeanDefinition("serviceA", createServiceABeanDefinition());
