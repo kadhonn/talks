@@ -1,16 +1,25 @@
 
-
+0)
 sample
 
+1)
 what is a beanfactory / beandefinitionregistry
 
+2)
 context vs beanfactory
 beanpostprocessors!
+mention what additional functionality contexts have, like env and events
 
+3)
 how to get beandefinitions into context?
-*BeanDefinitionReaders
 mention xml
-java based (configuration)
-annotation based (component scan)
+java configuration
+component scan
 
-autoconfiguration?
+
+
+still open
+autoconfiguration
+@Conditional
+
+more words about how specific technologies work?
