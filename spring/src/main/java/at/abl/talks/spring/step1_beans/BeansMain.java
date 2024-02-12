@@ -4,7 +4,6 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
@@ -22,22 +21,9 @@ public class BeansMain {
 
         System.out.println("now getting bean serviceB");
         ServiceB serviceB = beanFactory.getBean("serviceB", ServiceB.class);
+
         System.out.println("now using serviceB");
         serviceB.doBStuff();
-    }
-
-    private static BeanDefinition createServiceBBeanDefinition() {
-        GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
-
-        beanDefinition.setBeanClass(ServiceB.class);
-//        beanDefinition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
-
-        ConstructorArgumentValues constructorArgumentValues = new ConstructorArgumentValues();
-        constructorArgumentValues.addIndexedArgumentValue(0,
-                new ConstructorArgumentValues.ValueHolder(new RuntimeBeanReference(ServiceA.class)));
-        beanDefinition.setConstructorArgumentValues(constructorArgumentValues);
-
-        return beanDefinition;
     }
 
     private static BeanDefinition createServiceABeanDefinition() {
@@ -48,20 +34,23 @@ public class BeansMain {
 
         return beanDefinition;
     }
-}
 
-class ServiceB {
+    private static BeanDefinition createServiceBBeanDefinition() {
+        GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
 
-    private final ServiceA serviceA;
+        beanDefinition.setBeanClass(ServiceB.class);
+//        beanDefinition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
 
-    public ServiceB(ServiceA serviceA) {
-        System.out.println("constructor service B");
-        this.serviceA = serviceA;
-    }
+        ConstructorArgumentValues constructorArgumentValues = new ConstructorArgumentValues();
+        constructorArgumentValues.addIndexedArgumentValue(
+                0,
+                new ConstructorArgumentValues.ValueHolder(
+                        new RuntimeBeanReference(ServiceA.class)
+                )
+        );
+        beanDefinition.setConstructorArgumentValues(constructorArgumentValues);
 
-    public void doBStuff() {
-        System.out.println("doing service B stuff...");
-        serviceA.doAStuff();
+        return beanDefinition;
     }
 }
 
@@ -77,5 +66,20 @@ class ServiceA {
 
     public void doAStuff() {
         System.out.println("doing service A stuff...");
+    }
+}
+
+class ServiceB {
+
+    private final ServiceA serviceA;
+
+    public ServiceB(ServiceA serviceA) {
+        System.out.println("constructor service B");
+        this.serviceA = serviceA;
+    }
+
+    public void doBStuff() {
+        System.out.println("doing service B stuff...");
+        serviceA.doAStuff();
     }
 }

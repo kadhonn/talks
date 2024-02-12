@@ -26,6 +26,7 @@ public class ContextMain {
 
         System.out.println("now getting bean serviceA");
         ServiceA serviceA = beanFactory.getBean(ServiceA.class);
+
         System.out.println("now using serviceA");
         serviceA.doAStuff();
 
@@ -35,18 +36,18 @@ public class ContextMain {
 //        context.publishEvent(new ApplicationEvent("hello") {});
     }
 
-    private static BeanDefinition createPostProcessorBeanDefinition() {
-        GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
-
-        beanDefinition.setBeanClass(PostProcessor.class);
-
-        return beanDefinition;
-    }
-
     private static BeanDefinition createServiceABeanDefinition() {
         GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
 
         beanDefinition.setBeanClass(ServiceA.class);
+
+        return beanDefinition;
+    }
+
+    private static BeanDefinition createPostProcessorBeanDefinition() {
+        GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
+
+        beanDefinition.setBeanClass(PostProcessor.class);
 
         return beanDefinition;
     }
@@ -75,7 +76,6 @@ class ServiceA {
         System.out.println("post processed service A");
         postProcessed = true;
     }
-
 
     public void doAStuff() {
         System.out.println("doing service A stuff... and is postProcessed: " + postProcessed);

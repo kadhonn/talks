@@ -1,4 +1,4 @@
-package at.abl.talks.spring.step0_sample;
+package at.abl.talks.spring.step0_1_sample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
