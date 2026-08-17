@@ -1,9 +1,12 @@
 package com.dynatrace;
 
 import java.io.File;
+import java.lang.ref.Reference;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ACastProblem {
     public static void main(String[] args) throws Exception {
@@ -30,4 +33,5 @@ public class ACastProblem {
         a = (A) otherA;
         a.run();
     }
+
 }
