@@ -1,0 +1,116 @@
+def myTask = tasks.register("myTask") {
+    doFirst {
+        println "Ad-hoc task running"
+    }
+}
+myTask.configure {
+    doLast {
+        println "Ad-hoc cleanup running"
+    }
+}
+
+
+
+
+
+
+
+
+
+
+tasks.register("myTask1", MyTask1)
+
+abstract class MyTask1 extends DefaultTask {
+    @TaskAction
+    void run() {
+        println("MyTask1 running!")
+    }
+}
+
+
+
+
+
+
+
+
+
+
+tasks.register("myTask2", MyTask2) {
+    inputProperty = "hello!"
+}
+
+abstract class MyTask2 extends DefaultTask {
+    @Input
+    abstract String inputProperty = "default"
+
+    @TaskAction
+    void run() {
+        println("MyTask2 running with property: $inputProperty")
+    }
+}
+
+
+
+
+
+
+
+
+
+
+def myTask22 = tasks.register("myTask2-2", MyTask2).get()
+def myTask23 = tasks.register("myTask2-3", MyTask2).get()
+
+myTask23.inputProperty = myTask22.inputProperty
+
+//... somewhere else
+myTask22.inputProperty = "overwritten!"
+
+
+
+
+
+
+
+
+
+
+abstract class MyTask3 extends DefaultTask {
+
+    @Input
+    abstract Property<String> getInputProperty()
+
+    MyTask3() {
+        inputProperty.convention("default")
+    }
+
+    @TaskAction
+    void run() {
+        println("MyTask3 running with property: ${inputProperty.get()}")
+    }
+}
+
+def myTask31 = tasks.register("myTask3-1", MyTask3).get()
+def myTask32 = tasks.register("myTask3-2", MyTask3).get()
+
+myTask32.inputProperty = myTask31.inputProperty
+//myTask32.inputProperty.set(myTask31.inputProperty)
+
+//... somewhere else
+myTask31.inputProperty = "overwritten!"
+//myTask31.inputProperty.set("overwritten!")
+
+
+
+
+
+
+
+
+
+
+tasks.register("copy", Copy) {
+    from "src"
+    into "build/tmp"
+}

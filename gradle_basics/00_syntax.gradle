@@ -1,0 +1,18 @@
+println("Hello World!")
+
+Map m = [key: "value", hello: "world"]
+println(m)
+println m
+
+println m.collect {
+    it.value.toUpperCase()
+}
+
+//System.out.println(m.collect(it -> it.value.toUpperCase())
+
+for (i in 1..10) {
+    println("$i")
+}
+
+project.tasks
+// https://docs.gradle.org/current/javadoc/org/gradle/api/Project.html

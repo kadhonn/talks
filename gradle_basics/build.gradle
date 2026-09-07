@@ -1,0 +1,5 @@
+//apply from: "00_syntax.gradle"
+//apply from: "00_syntax.gradle.kts"
+//apply from: "01_phases.gradle"
+//apply from: "02_writing_simple_tasks.gradle"
+apply from: "03_writing_utd_tasks.gradle"
