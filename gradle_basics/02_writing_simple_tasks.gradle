@@ -112,5 +112,7 @@ myTask31.inputProperty = "overwritten!"
 
 tasks.register("copy", Copy) {
     from "src"
+//    from("src")
     into "build/tmp"
+//    into("build/tmp")
 }
