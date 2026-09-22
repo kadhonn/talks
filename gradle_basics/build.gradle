@@ -2,4 +2,7 @@
 //apply from: "00_syntax.gradle.kts"
 //apply from: "01_phases.gradle"
 //apply from: "02_writing_simple_tasks.gradle"
-apply from: "03_writing_utd_tasks.gradle"
+//apply from: "03_writing_utd_tasks.gradle"
+//apply from: "04_simple_plugin.gradle"
+//apply from: "05_configuring_plugins.gradle"
+apply from: "06_named_object_container.gradle"

@@ -36,14 +36,45 @@ need ouput for up to date
 can add manual handling
 
 
+## 04 Simple Plugins
+
+we learned about tasks, and everything from now on is only about how to get the correct tasks and how to configure them
+
+one obvious way to get tasks is plugins, lets look at the simplest one
+
+there are many different ways how to get plugins, builtin, gradle site, buildSrc, or locally like this
+
+of course you can publish that, but noone (e.g. I) don't care about that right now
+
+## 05 Configuring Plugins (aka extensions)
+
+we could configure tasks directly, but this sucks
+
+so we create extensions
+
+also see objectfactory for the nested example
+
+after nested example look at java {} dsl api doc and compare toolchain with ours
+
+## 06 NamedDomainObjectContainer
+
+....
+
+
+
+
+
 
 
 # Future Ideas
 
 
-write your own plugins?
-
-extensions
-
+talk about lazy + eager task creation???
 
 dependencies, configurations
+
+
+working with files, project.files(...), fileTree,...
+
+gradle tooling interface
+

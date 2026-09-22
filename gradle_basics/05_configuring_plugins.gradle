@@ -1,0 +1,102 @@
+//tasks.withType(JavaCompile).configureEach {
+//    setJavaCompiler(...)
+//}
+
+
+
+
+
+//java {
+//    toolchain {
+//        languageVersion = JavaLanguageVersion.of(17)
+//    }
+//}
+// https://docs.gradle.org/current/dsl/org.gradle.api.plugins.JavaPluginExtension.html
+
+
+
+
+
+
+abstract class MyExtension {
+    abstract Property<String> getInputProperty()
+}
+
+abstract class MyTask extends DefaultTask {
+    @Input
+    abstract Property<String> getInputProperty()
+
+    @TaskAction
+    void run() {
+        println("MyTask running with property: ${inputProperty.get()}")
+    }
+}
+
+class ConfigurablePlugin implements Plugin<Project> {
+    void apply(Project project) {
+        println "Applying ConfigurablePlugin!"
+
+        def extension = project.extensions.create("myExtension", MyExtension)
+
+        project.tasks.register('myTask', MyTask) {
+            inputProperty.convention(extension.inputProperty)
+        }
+    }
+}
+
+
+
+apply plugin: ConfigurablePlugin
+
+myExtension {
+    inputProperty = "helloooo!"
+}
+
+
+
+
+
+
+
+
+
+
+abstract class MyOuterExtension {
+    final MyInnerState innerState
+
+    MyOuterExtension(ObjectFactory objectFactory) {
+        innerState = objectFactory.newInstance(MyInnerState)
+    }
+
+    void innerState(Action<? super MyInnerState> action) {
+        print("running innerState action!")
+        action.execute(innerState)
+    }
+}
+
+abstract class MyInnerState {
+    abstract Property<String> getInputProperty()
+}
+
+class NestedConfigurationPlugin implements Plugin<Project> {
+    void apply(Project project) {
+        println "Applying NestedConfigurationPlugin!"
+
+        def extension = project.extensions.create("myNestedExtension", MyOuterExtension)
+
+        project.tasks.register('myNestedTask', MyTask) {
+            inputProperty.convention(extension.innerState.inputProperty)
+        }
+    }
+}
+
+
+
+apply plugin: NestedConfigurationPlugin
+
+myNestedExtension {
+//    innerState.inputProperty = "nested hello with property!"
+    innerState {
+        inputProperty = "nested hello with dsl!"
+    }
+}
