@@ -20,6 +20,7 @@ public class ClassValues {
             @Override
             protected Method computeValue(Class<?> type) {
                 try {
+                    System.out.println("re-initialize");
                     return type.getMethod("run");
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException(e);
