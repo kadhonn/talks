@@ -1,0 +1,21 @@
+class SimplePlugin implements Plugin<Project> {
+    void apply(Project project) {
+        println "Applying SimplePlugin!"
+
+
+//        project.plugins.apply("java")
+
+//        project.getPluginManager().withPlugin("java") {
+//            ...
+//        }
+
+
+        project.tasks.register('simplePluginTask') {
+            doLast {
+                println 'Hello from the SimplePlugin'
+            }
+        }
+    }
+}
+
+apply plugin: SimplePlugin

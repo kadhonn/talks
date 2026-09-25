@@ -1,0 +1,98 @@
+//publishing {
+//    publications {
+//        oneagent_graalnative_feature_publish(MavenPublication) {
+//            groupId = "com.dynatrace.oneagent"
+//            artifactId = "oneagent-graalnative-feature"
+//            artifact jar
+//        }
+//    }
+//}
+
+
+
+
+
+
+
+
+
+
+abstract class MyExtension {
+
+    final NamedDomainObjectContainer<MyNamedObject> myNamedObjects
+
+    MyExtension(ObjectFactory objectFactory) {
+        myNamedObjects = objectFactory.domainObjectContainer(MyNamedObject)
+    }
+
+    void myNamedObjects(Action<NamedDomainObjectContainer<MyNamedObject>> action) {
+        action.execute(myNamedObjects)
+    }
+}
+
+abstract class MyNamedObject implements Named {
+    private final String name
+
+    MyNamedObject(String name) {
+        this.name = name
+    }
+
+    @Override
+    String getName() {
+        return name
+    }
+
+    abstract Property<String> getDescription();
+}
+
+abstract class DomainTask extends DefaultTask {
+    @Input
+    abstract Property<MyNamedObject> getNamedObject()
+
+    @TaskAction
+    void run() {
+        println("DomainTask running with object named: ${namedObject.get().name} and description: ${namedObject.get().description.get()}")
+    }
+}
+
+class DomainPlugin implements Plugin<Project> {
+    void apply(Project project) {
+        println "Applying DomainPlugin!"
+
+        def extension = project.extensions.create("myDomainExtension", MyExtension)
+
+        def allTask = project.tasks.register("allDomainTasks")
+
+        extension.myNamedObjects.configureEach { configuredNamedObject ->
+            def domainTask = project.tasks.register("domainTask_" + configuredNamedObject.name, DomainTask) {
+                namedObject.convention(configuredNamedObject)
+            }
+            allTask.configure {
+                dependsOn(domainTask)
+            }
+        }
+
+    }
+}
+
+
+
+apply plugin: DomainPlugin
+
+myDomainExtension {
+    myNamedObjects {
+        firstObject {
+            description = "first description"
+        }
+        secondObject {
+            description = "second description"
+        }
+    }
+}
+
+
+
+
+
+
+

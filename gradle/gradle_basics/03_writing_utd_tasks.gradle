@@ -1,0 +1,56 @@
+tasks.register("myTask1", MyTask1) {
+    inputDirectory = file("src/main/dummy")
+    outputFile = file("build/out.txt")
+}
+
+abstract class MyTask1 extends DefaultTask {
+
+    @InputDirectory
+    abstract DirectoryProperty getInputDirectory()
+
+    @OutputFile
+    abstract RegularFileProperty getOutputFile()
+
+    @TaskAction
+    void run() {
+        println("MyTask1 is running!")
+        def listOfFiles = inputDirectory.get().asFileTree.collect()
+        outputFile.get().asFile.write(listOfFiles.toString())
+    }
+}
+
+
+
+
+
+
+
+
+
+
+tasks.register("myTask2", MyTask2) {
+//    dependsOn(tasks.named("myTask1"))
+    inputFile = tasks.named("myTask1", MyTask1).get().outputFile
+//    inputFile = file("build/out.txt")
+}
+
+tasks.register("myTask3") {
+    tasks.myTask2.inputs.file(tasks.myTask1)
+}
+
+abstract class MyTask2 extends DefaultTask {
+
+    MyTask2() {
+        outputs.upToDateWhen {
+            true
+        }
+    }
+
+    @InputFile
+    abstract RegularFileProperty getInputFile()
+
+    @TaskAction
+    void run() {
+        println(inputFile.get().asFile.readLines())
+    }
+}

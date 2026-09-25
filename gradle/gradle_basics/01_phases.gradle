@@ -1,0 +1,19 @@
+println("configuration phase")
+
+tasks.register("myTask") {
+    println("configuration phase in task 1")
+    doFirst {
+        println("execution phase in task 1")
+    }
+}
+
+tasks.register("myTask2") { myTask2 ->
+
+    dependsOn(tasks.named("myTask"))
+//    tasks.named("myTask").get().dependsOn(myTask2)
+
+    println("configuration phase in task 2")
+    doFirst {
+        println("execution phase in task 2")
+    }
+}
