@@ -68,7 +68,7 @@ abstract class MyOuterExtension {
         innerState = objectFactory.newInstance(MyInnerState)
     }
 
-    void innerState(Action<? super MyInnerState> action) {
+    void configureMe(Action<? super MyInnerState> action) {
         println("running innerState action!")
         action.execute(innerState)
     }
